@@ -2,7 +2,7 @@ import web
 import json
 
 from radio.core.cursor import Cursor
-from .api import encode, path
+from .api import encode, path, error
 
 @path("/queue/(\d+)[/]?")
 class queue(object):
@@ -13,6 +13,8 @@ class queue(object):
 
         Returns the next <limit> songs in the queue.
         """
+        if int(limit) > 25:
+            return error("Requested queue too large")
         with Cursor() as cur:
             cur.execute("""
                 SELECT meta,
