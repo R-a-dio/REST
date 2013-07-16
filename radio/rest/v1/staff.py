@@ -3,7 +3,7 @@ import json
 from radio.core.cursor import Cursor
 from .api import path, encode, error
 
-@path("/staff/(\d+)/")
+@path("/staff/(\d+)[/]?")
 class detail(object):
     @encode
     def GET(self, djid):
@@ -17,17 +17,23 @@ class detail(object):
             if count == 0:
                 return error("Dj ID does not exist.")
             for id, name, text, image, color in cur:
+                colors = color.split(" ")
                 ret = {
                     'id': id,
                     'name': name,
                     'text': text,
                     'image': image,
-                    'color': color,
+                    'color': {
+                        # Complete lack of error-handling here
+                        'red' : colors[0],
+                        'green' : colors[1],
+                        'blue' : colors[2],
+                    },
                 }
             return ret
 
 
-@path("/staff/")
+@path("/staff[/]?")
 class listing(object):
     @encode
     def GET(self):

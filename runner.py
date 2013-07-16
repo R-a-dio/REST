@@ -7,14 +7,13 @@ import radio.core
 
 RUNNING = True
 
-from . import app
+from radio.rest import app
 
 
 if __name__ == "__main__":
     radio.core.load("radio.conf.yaml")
-
     # Import all the APIs we have here.
-    from . import v1
+    from radio.rest import v1
 
     application = web.application(app.get_urls(), app.get_classes(), False)
     application.run()
