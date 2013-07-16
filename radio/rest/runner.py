@@ -4,12 +4,17 @@ from __future__ import absolute_import
 import web
 import radio.core
 
-from . import fave, news, queue, relay, song, comment, account, staff
-from . import api
+
+RUNNING = True
+
+from . import app
 
 
 if __name__ == "__main__":
     radio.core.load("radio.conf.yaml")
 
-    app = web.application(api.urls, api.names, False)
-    app.run()
+    # Import all the APIs we have here.
+    from . import v1
+
+    application = web.application(app.get_urls(), app.get_classes(), False)
+    application.run()

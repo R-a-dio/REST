@@ -1,12 +1,16 @@
-import web
-import json
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
 from radio.core.cursor import Cursor
-from .api import path, encode
+
+from . import app
+from ..app import API
 
 
-@path("/faves/(\w+)/")
+@app.path("/faves/(\w+)/")
 class fave(object):
-    @encode
+    __metaclass__ = API
+
     def GET(self, name):
         with Cursor() as cur:
             cur.execute("""
@@ -30,12 +34,3 @@ class fave(object):
                     'meta': meta,
                 })
             return ret
-
-    def DELETE(id):
-        pass
-
-    def PUT(id):
-        pass
-
-    def POST(id):
-        pass
