@@ -4,7 +4,7 @@ from radio.core.cursor import Cursor
 from .api import path, encode
 
 
-@path("/faves/(\w+)/")
+@path("/faves/(\w+)[/]?")
 class fave(object):
     @encode
     def GET(self, name):

@@ -2,7 +2,7 @@ import web
 from radio.core.cursor import Cursor
 from .api import path, encode, error, normalize
 
-@path("/news/list/(\d+)/")
+@path("/news/list/(\d+)[/]?")
 class listing(object):
     @encode
     def GET(self, limit):
@@ -36,7 +36,7 @@ class listing(object):
     def POST(id):
         pass
 
-@path("/news/(\d+)/")
+@path("/news/(\d+)[/]?")
 class detail(object):
     @encode
     def GET(self, nid):

@@ -3,7 +3,7 @@ import json
 from radio.core.cursor import Cursor
 from .api import path, encode, error
 
-@path("/staff/(\d+)/")
+@path("/staff/(\d+)[/]?")
 class detail(object):
     @encode
     def GET(self, djid):
@@ -33,7 +33,7 @@ class detail(object):
             return ret
 
 
-@path("/staff/")
+@path("/staff[/]?")
 class listing(object):
     @encode
     def GET(self):
