@@ -14,7 +14,7 @@ class queue(object):
         Returns the next <limit> songs in the queue.
         """
         if int(limit) > 25:
-            return error("Requested queue too large")
+            return error("request too large")
         with Cursor() as cur:
             cur.execute("""
                 SELECT meta,
@@ -35,4 +35,6 @@ class queue(object):
                     'length': length, # length in seconds.
                     'type': type # internal
                 })
+            if not ret:
+                return error("no queue available")
             return ret
