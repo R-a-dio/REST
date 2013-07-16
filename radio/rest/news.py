@@ -6,6 +6,11 @@ from .api import path, encode, error, normalize
 class listing(object):
     @encode
     def GET(self, limit):
+        """
+        GET /news/list/<limit, int>/
+
+        Returns the last <limit> news posts.
+        """
         with Cursor() as cur:
             cur.execute("""
                 SELECT id, header, UNIX_TIMESTAMP(time) as utime
@@ -31,10 +36,16 @@ class listing(object):
     def POST(id):
         pass
 
-@path("/news/(\w+)/")
+@path("/news/(\d+)/")
 class detail(object):
     @encode
     def GET(self, nid):
+        """
+        GET /news/<id, int>/
+
+        Returns the news body, metadata and comments
+        for a given news ID (From listing).
+        """
         with Cursor() as cur:
             count = cur.execute("""
                 SELECT news.id, news.header, UNIX_TIMESTAMP(news.time),
