@@ -1,11 +1,15 @@
 import web
 
 from radio.core.cursor import Cursor
-from .api import encode, path, error
 
-@path("/relays[/]?")
+from . import app
+from ..app import API
+
+@app.path("/relays")
 class relay_list(object):
-    @encode
+
+    __metaclass__ = API
+
     def GET(self):
         """
         GET /relays[/]
