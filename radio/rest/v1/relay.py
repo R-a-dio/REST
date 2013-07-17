@@ -52,5 +52,5 @@ class relay_list(object):
                     'disabled': disabled,
                 })
             if not ret:
-                return error("no relays available. contact a dev.")
+                return {"error": "no relays available. contact a dev."}
             return ret        
