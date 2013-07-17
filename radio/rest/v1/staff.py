@@ -1,11 +1,13 @@
-import web
-import json
 from radio.core.cursor import Cursor
-from .api import path, encode, error
 
-@path("/staff/(\d+)[/]?")
+from . import app
+from ..app import API
+
+@app.path("/staff/(\d+)")
 class detail(object):
-    @encode
+
+    __metaclass__ = API
+
     def GET(self, djid):
         with Cursor() as cur:
             count = cur.execute("""
@@ -15,7 +17,7 @@ class detail(object):
             """, (djid,))
 
             if count == 0:
-                return error("Dj ID does not exist.")
+                return error("dj id does not exist.")
             for id, name, text, image, color in cur:
                 colors = color.split(" ")
                 ret = {
@@ -33,9 +35,11 @@ class detail(object):
             return ret
 
 
-@path("/staff[/]?")
+@app.path("/staff")
 class listing(object):
-    @encode
+
+    __metaclass__ = API
+
     def GET(self):
         with Cursor() as cur:
             cur.execute("""
@@ -46,11 +50,17 @@ class listing(object):
             """)
 
             ret = []
+            colors = color.split(" ")
             for id, name, image, color in cur:
                 ret.append({
                     'id': id,
                     'name': name,
                     'image': image,
-                    'color': color,
+                    'color': {
+                        # Complete lack of error-handling here
+                        'red' : colors[0],
+                        'green' : colors[1],
+                        'blue' : colors[2],
+                    },
                 })
             return ret
