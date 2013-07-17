@@ -7,7 +7,7 @@ from . import app
 from ..app import API
 
 
-@app.path("/faves/(\w+)/")
+@app.path("/faves/(\w+)")
 class fave(object):
     __metaclass__ = API
 
