@@ -5,4 +5,4 @@ from ..app import App
 app = App('v1')
 
 
-from . import fave
+from . import fave, queue, relay, staff, news
