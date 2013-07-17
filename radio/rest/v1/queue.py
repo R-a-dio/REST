@@ -1,12 +1,13 @@
-import web
-import json
-
 from radio.core.cursor import Cursor
-from .api import encode, path, error
 
-@path("/queue/(\d+)[/]?")
+from . import app
+from ..app import API
+
+@app.path("/queue/(\d+)")
 class queue(object):
-    @encode
+
+    __metaclass__ = API
+
     def GET(self, limit):
         """
         GET /queue[/<limit, int>/]
