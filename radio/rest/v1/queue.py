@@ -3,7 +3,7 @@ from radio.core.cursor import Cursor
 from . import app
 from ..app import API
 
-@app.path("/queue/(\d+)")
+@app.path("/queue[/]?(\d+)?")
 class queue(object):
 
     __metaclass__ = API
@@ -14,7 +14,9 @@ class queue(object):
 
         Returns the next <limit> songs in the queue.
         """
-        if int(limit) > 25:
+        if not limit:
+            limit = 5
+        elif int(limit) > 25:
             return {"error": "request too large"}
         with Cursor() as cur:
             cur.execute("""
