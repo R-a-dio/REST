@@ -43,9 +43,9 @@ class App(object):
         ```
         """
         if path.startswith("/"):
-            path = "/" + self.version + path
+            path = "/" + self.version + path + "[/]?"
         else:
-            path = "/" + self.version + "/" + path
+            path = "/" + self.version + "/" + path + "[/]?"
 
         print path
         def wrapper(kls):
