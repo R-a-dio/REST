@@ -3,7 +3,7 @@ from radio.core.cursor import Cursor
 from . import app
 from ..app import API
 
-@app.path("/queue[/]?(\d+)?")
+@app.path("/queue(?:/)?(\d+)?")
 class queue(object):
 
     __metaclass__ = API

@@ -3,7 +3,7 @@ from radio.core.cursor import Cursor
 from . import app
 from ..app import API
 
-@app.path("/staff/(\d+)?")
+@app.path("/staff(?:/)?(\d+)?")
 class detail(object):
 
     __metaclass__ = API
