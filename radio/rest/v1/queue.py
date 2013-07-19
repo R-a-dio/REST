@@ -3,12 +3,15 @@ from radio.core.cursor import Cursor
 from . import app
 from ..app import API
 
-@app.path("/queue(?:/)?(\d+)?")
-class queue(object):
-
+class Queue(object):
     __metaclass__ = API
 
-    def GET(self, limit):
+    @app.get("/queue/")
+    def peek_top(self):
+        return self.iter(limit=5)
+
+    @app.get("/queue/<int:limit>/")
+    def iter(self, limit):
         """
         GET /queue[/<limit, int>/]
 
@@ -29,15 +32,17 @@ class queue(object):
                 ORDER BY timestr ASC
                 LIMIT {:d}
             """.format(int(limit)))
-            ret = []
+            res = {'queue': []}
+            queue = res['queue']
             for meta, timestr, type, trackid, length in cur:
-                ret.append({
+                queue.append({
                     'id': trackid, # Internal song ID. 0 if not an AFK song.
                     'track': meta, # Song metadata
                     'time': timestr, # ETA for song playing
                     'length': length, # length in seconds.
                     'type': type # internal
                 })
-            if not ret:
+            else:
                 return {"error": "no queue available"}
-            return ret
+
+            return res

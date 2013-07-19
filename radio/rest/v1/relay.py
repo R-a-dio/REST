@@ -5,12 +5,12 @@ from radio.core.cursor import Cursor
 from . import app
 from ..app import API
 
-@app.path("/relays")
-class relay_list(object):
+class Relays(object):
 
     __metaclass__ = API
 
-    def GET(self):
+    @app.get("/relays/")
+    def list(self):
         """
         GET /relays[/]
 
@@ -33,11 +33,13 @@ class relay_list(object):
                 FROM relays
                 ORDER BY id ASC
             """)
-            ret = []
-            for id, relay_name, port, mount, bitrate, format, \
-                priority, active, listeners, listener_limit, \
-                country, disabled  in cur:
-                ret.append({
+            res = {'relays': []}
+            relays = res['relays']
+
+            for (id, relay_name, port, mount, bitrate, format,
+                    priority, active, listeners, listener_limit,
+                    country, disabled)  in cur:
+                relays.append({
                     'id': id, # Internal Database ID
                     'name': relay_name,
                     'port': port,
@@ -51,6 +53,6 @@ class relay_list(object):
                     'country_code': country,
                     'disabled': disabled,
                 })
-            if not ret:
+            if not relays:
                 return {"error": "no relays available. contact a dev."}
-            return ret        
+            return res

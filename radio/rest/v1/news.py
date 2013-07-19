@@ -1,14 +1,18 @@
 from radio.core.cursor import Cursor
 
 from . import app
-from ..app import API
+from ..app import API, normalize
 
-@app.path("/news/list/(\d+)")
-class listing(object):
 
+class News(object):
     __metaclass__ = API
 
-    def GET(self, limit):
+    @app.get("/news/latest/")
+    def latest(self):
+        return self.list(limit=10)
+
+    @app.get("/news/list/<int:limit>/")
+    def list(self, limit):
         """
         GET /news/list/<limit, int>/
 
@@ -21,30 +25,19 @@ class listing(object):
                 ORDER BY time DESC
                 LIMIT {:d}
             """.format(int(limit)))
-            ret = []
+            res = {"news": []}
+            news = res['news']
             for id, header, time in cur:
-                ret.append({
+                news.append({
                     'id': id,
                     'title': header,
                     'post_time': time,
                 })
-            return ret
 
-    def DELETE(id):
-        pass
+            return res
 
-    def PUT(id):
-        pass
-
-    def POST(id):
-        pass
-
-@app.path("/news/(\d+)")
-class detail(object):
-
-    __metaclass__ = API
-
-    def GET(self, nid):
+    @app.get("/news/<int:nid>/")
+    def detail(self, nid):
         """
         GET /news/<id, int>/
 

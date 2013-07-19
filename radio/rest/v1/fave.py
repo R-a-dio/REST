@@ -7,11 +7,11 @@ from . import app
 from ..app import API
 
 
-@app.path("/faves/(\w+)")
-class fave(object):
+class Fave(object):
     __metaclass__ = API
 
-    def GET(self, name):
+    @app.get("/faves/<name>/")
+    def for_nick(self, name):
         with Cursor() as cur:
             cur.execute("""
                 SELECT efave.id, enick.id,

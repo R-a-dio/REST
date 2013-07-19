@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from __future__ import absolute_import
 
-import web
+import flask
 import radio.core
 
 
@@ -15,5 +15,10 @@ if __name__ == "__main__":
     # Import all the APIs we have here.
     from radio.rest import v1
 
-    application = web.application(app.get_urls(), app.get_classes(), False)
-    application.run()
+    # Create our application of flask
+    application = flask.Flask("radio.rest")
+
+    # Get everything to register
+    app.App.register_routes(application)
+
+    application.run(host='0.0.0.0', port=8050, debug=True)

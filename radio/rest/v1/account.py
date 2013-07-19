@@ -3,9 +3,7 @@ from radio.core.cursor import Cursor
 from . import app
 from ..app import API
 
-@app.path("/users(?:/)?(\d+)?")
 class detail(object):
-
     __metaclass__ = API
 
     def GET(self, user_id):
@@ -17,7 +15,7 @@ class detail(object):
                 WHERE id=%s
                 LIMIT 1
                 """, (user_id,))
-                
+
                 if count == 0:
                     return {"errno": 1, "error": "user does not exist."}
             else:
@@ -44,5 +42,5 @@ class detail(object):
                     #    'admin': p_admin, # full admin console access (users)
                     #    'dev': p_dev, # experimental console access (alerts, maintenance, relays)
                     #},
-                }) 
+                })
             return ret
