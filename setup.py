@@ -12,8 +12,8 @@ setup(
     url="http://github.com/R-a-dio/radio.core",
     namespace_packages=["radio"],
     install_requires=[
-        "radio.core",
-        "web.py",
+        "radio.core==0.1.1",
+        "flask",
     ],
     packages=["radio.rest"],
     tests_require=["pytest"],
