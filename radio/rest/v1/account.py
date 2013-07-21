@@ -38,14 +38,14 @@ class Users(object):
                     #'permissions': privileges,
                     # New-style permissions
                     'permissions': {
-                        'accept': p_accept,  # accept pending songs
-                        'delete': p_delete, # database delete access
-                        'read': p_read, # database read access
-                        'edit': p_edit, # database update access
-                        'dj': p_dj, # able to use DJ proxy login
-                        'news': p_news, # able to post/edit news
-                        'admin': p_admin, # full admin console access (users)
-                        'dev': p_dev, # experimental console access (alerts, maintenance, relays)
+                        'accept': bool(p_accept),  # accept pending songs
+                        'delete': bool(p_delete), # database delete access
+                        'read': bool(p_read), # database read access
+                        'edit': bool(p_edit), # database update access
+                        'dj': bool(p_dj), # able to use DJ proxy login
+                        'news': bool(p_news), # able to post/edit news
+                        'admin': bool(p_admin), # full admin console access (users)
+                        'dev': bool(p_dev), # experimental console access (alerts, maintenance, relays)
                     },
                 }
             return {"user" : ret}
@@ -78,14 +78,14 @@ class Users(object):
                     #'permissions': privileges,
                     # New-style permissions
                     'permissions': {
-                        'accept': p_accept,  # accept pending songs
-                        'delete': p_delete, # database delete access
-                        'read': p_read, # database read access
-                        'edit': p_edit, # database update access
-                        'dj': p_dj, # able to use DJ proxy login
-                        'news': p_news, # able to post/edit news
-                        'admin': p_admin, # full admin console access (users)
-                        'dev': p_dev, # experimental console access (alerts, maintenance, relays)
+                        'accept': bool(p_accept),  # accept pending songs
+                        'delete': bool(p_delete), # database delete access
+                        'read': bool(p_read), # database read access
+                        'edit': bool(p_edit), # database update access
+                        'dj': bool(p_dj), # able to use DJ proxy login
+                        'news': bool(p_news), # able to post/edit news
+                        'admin': bool(p_admin), # full admin console access (users)
+                        'dev': bool(p_dev), # experimental console access (alerts, maintenance, relays)
                     },
                 })
             return {"users" : ret}
